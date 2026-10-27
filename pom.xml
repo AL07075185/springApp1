@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Proyecto auxiliar para descargar los binarios (archivos .jar) de
+    Spring Framework 7.0.10 desde Maven Central.
+
+    Uso en NetBeans: File > Open Project > descarga-spring > Clean and Build.
+    Los .jar quedan en: target/spring-framework-7.0.10
+    Después se registran en Tools > Libraries como una biblioteca nueva.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>mx.tecmilenio</groupId>
+    <artifactId>descarga-spring</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <name>Descarga de Spring Framework 7.0.10</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.version>7.0.10</spring.version>
+    </properties>
+
+    <dependencies>
+        <!-- spring-webmvc trae consigo los demás módulos que necesita:
+             spring-aop, spring-beans, spring-context, spring-core,
+             spring-expression y spring-web, además de sus librerías de apoyo. -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.8.1</version>
+                <executions>
+                    <execution>
+                        <id>copiar-binarios-spring</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/spring-framework-${spring.version}</outputDirectory>
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
